@@ -1,0 +1,9 @@
+<aura:component>
+    <ltng:require scripts="{!$Resource.HeatMap + '/dst/Chart.HeatMap.S.min.js'}"/>
+    <aura:method 	name="loadChart" action="{!c.loadChart}">
+        <aura:attribute name="chartData" type="Object"/>
+    </aura:method>
+    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--3-of-4" style="pointer-events: none">
+        <canvas aura:id="heatmap" id="heatmap" height="400" width="800" overflow="auto"/>
+    </div>
+</aura:component>

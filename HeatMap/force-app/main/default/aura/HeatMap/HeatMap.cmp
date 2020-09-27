@@ -1,0 +1,60 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="GLOBAL" controller="HeatMapController">
+    <aura:attribute name="objName" 			type="String" access="GLOBAL" 	default="Contact"/> 
+    <aura:attribute name="title" 			type="String" 	access="GLOBAL"	default="HeatMap"/>
+    <aura:attribute name="parentFieldName"	type="String" 	access="GLOBAL"	default="AccountId"/>
+
+    <!-- Picklist attributes-->
+    <aura:attribute name="fields" 			type="List" 	access="PRIVATE"/>
+    <aura:attribute name="selPrimaryField" 	type="String" 	access="PRIVATE"/>
+    <aura:attribute name="selSecondaryField" type="String" 	access="PRIVATE"/>
+
+    <!-- Handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="utility:connected_apps" size="small"/>
+            {! v.title }
+        </aura:set>
+        <aura:set attribute="footer">
+            Primary (Y) Axis – {!v.selPrimaryField}, Secondary (X) Axis – {!v.selSecondaryField}
+        </aura:set>
+        <div class="spinnerContainer">
+            <lightning:spinner aura:id="spinner" variant="brand" size="medium" class="slds-hide" />
+        </div>
+        
+        <lightning:layout>
+            
+            <lightning:layoutItem padding="around-small" flexibility="auto">
+                <lightning:select label="Primary" value="{!v.selPrimaryField}" required="true"
+                                  aura:id="field" onchange="{! c.onChange }">
+                    <option text="None" value=""/>
+                    <aura:iteration items="{!v.fields}" var="field">
+                        <aura:if isTrue="{!field.value != v.selSecondaryField}">
+                            <option value="{!field.value}">{!field.label}</option>
+                        </aura:if>
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" flexibility="auto">
+                <lightning:select label="Secondary" value="{!v.selSecondaryField}" required="true"
+                                  aura:id="field" onchange="{! c.onChange }">
+                    <option text="None" value=""/>
+                    <aura:iteration items="{!v.fields}" var="field">
+                        <aura:if isTrue="{!field.value != v.selPrimaryField}">
+                            <option value="{!field.value}">{!field.label}</option>
+                        </aura:if>
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+         
+        </lightning:layout>
+        
+        <lightning:layout>
+            <lightning:layoutItem padding="around-small" flexibility="auto">
+                <c:HeatMapChart aura:id="chartComp"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+    </lightning:card>
+</aura:component>

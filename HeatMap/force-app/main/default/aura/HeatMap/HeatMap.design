@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="objName" label="Object Name" datasource="apex://HeatMapService"/> 
+    <design:attribute name="title" label="Title"/> 
+    <design:attribute name="parentFieldName" label="Parent Field Name"/> 
+</design:component>
